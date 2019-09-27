@@ -6,50 +6,30 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    static Random rand = new Random();
     static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        System.out.println("Enter your guess: ");
-        String answer;
-
-        do {
+        System.out.println("Enter your code: ");
+        System.out.println("Enter your password: ");
 
 
-            boolean userWon = false;
+        int userNum = scan.nextInt();
+        int userPas = scan.nextInt();
 
-            for (int i = 0; i < 10; i++) {
 
-                int myNum = rand.nextInt(100) + 1;
-                int userNum = scan.nextInt();
-                {
+        if (userNum == 1337228) {
+            System.out.println("Your Code is correct");
 
-                    if (myNum == userNum) {
-                        System.out.println("You won");
-                        userWon = true;
-                        break;
+        } else {
+             System.out.println("Wrong operation");
+            if (userPas == 999333) {
+                 System.out.println("Your password is correct");
 
-                    } else if (myNum < userNum) {
-                        System.out.println("My number is smaller than yours");
-
-                    } else {
-                        System.out.println("My number is bigger than yours");
-                    }
-
-                }
-                if (!userWon) {
-                    System.out.println("Loser!");
-
-                }
-
+            } else {
+                    System.out.println("Wrong operation");
 
             }
-            System.out.println("Would you like to play again? (y/n)");
-
-            answer = scan.next();
-        } while (answer.equals("y"));
-
-    }
+        }
 }
-
+}
