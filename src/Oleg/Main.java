@@ -1,7 +1,5 @@
 package Oleg;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,7 +13,7 @@ public class Main {
 
         do {
 
-
+            askString("Please enter your name: ");
             boolean userWon = false;
             int myNum = rand.nextInt(100) + 1;
 
@@ -48,7 +46,7 @@ public class Main {
         } while (askStr("Do you want to play again?"));
 
 
-        }
+    }
 
     static int askInt(String msg, int min, int max) {
         while (true) {
@@ -61,7 +59,7 @@ public class Main {
             } catch (InputMismatchException ex) {
                 System.out.println("It isn't a number");
                 scan.next();
-}
+            }
             System.out.printf("Please enter number from %d to %d\n", min, max);
         }
 
@@ -78,7 +76,19 @@ public class Main {
             }
             System.out.println("Enter 'y' or 'n'");
         }
+
     }
+
+    static String askString(String msg) {
+        System.out.println(msg);
+        String answer = scan.next();
+        return answer;
+
+
+
+    }
+
+
 
 
 
