@@ -1,13 +1,17 @@
 package Oleg;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class Main {
     static Random rand = new Random();
     static Scanner scan = new Scanner(System.in);
-    static ArrayList<GameResult> users = new ArrayList<>();
-
+    static ArrayList<GameResult> LeaderBoard = new ArrayList<>();
     public static void main(String[] args) {
+        loadResults();
         String answer;
 
         do {
@@ -25,10 +29,10 @@ public class Main {
                     if (myNum == userNum) {
                         long t2 = System.currentTimeMillis();
                         GameResult r = new GameResult();
-                        r.name = userName;
-                        r.triesCount = i + 1;
-                        r.time = t2-t1;
-                        users.add(r);
+                        r.setName(userName);
+                        r.setTriesCount(i + 1);
+                        r.setTime(t2 - t1);
+                        LeaderBoard.add(r);
                         System.out.println("You won");
                         userWon = true;
 
@@ -53,14 +57,73 @@ public class Main {
 
         } while (askStr("Do you want to play again?"));
 
-        users.sort(Comparator.comparing((r) -> r.triesCount));
-
-        for (GameResult result : users) {
-            System.out.printf("%s \t\t\t %d %d\n", result.name, result.triesCount, result.time / 1000);
+        showResults2();
+        file();
 
 
+    }
+
+    private static void loadResults() {
+        File file = new File("Myfile.txt");
+        try (Scanner in = new Scanner(file)) {
+
+            while (in.hasNext()){
+
+                GameResult r = new GameResult();
+
+                String name = in.next();
+                int tries = in.nextInt();
+                long time = in.nextLong();
+
+                r.setName(name);
+                r.setTriesCount(tries);
+                r.setTime(time);
+
+                LeaderBoard.add(r);
+            }
+        }catch (IOException e ){
+            System.out.println("Cannot read leader board");
         }
 
+    }
+
+    private static void file(){
+
+
+        File file = new File("Myfile.txt");
+        try (PrintWriter out = new PrintWriter(file)){
+
+            for (GameResult result : LeaderBoard) {
+                out.printf("%s %d %d\n", result.getName(), result.getTriesCount(), result.getTime());
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error!!! Try again");
+        }
+    }
+
+   /* private static void ShowResult() {
+        LeaderBoard.sort(Comparator
+                .comparing(GameResult::getTriesCount)
+                .thenComparing(GameResult::getTime));
+
+        for (GameResult result : LeaderBoard) {
+            System.out.printf("%s \t\t\t %d %d\n", result.getName(), result.getTriesCount(), result.getTime() / 1000);
+
+
+
+    }*/
+
+    private static void showResults2(){
+        LeaderBoard.stream()
+                .sorted(Comparator
+                    .comparingInt(GameResult::getTriesCount)
+                    .thenComparing(GameResult::getTime))
+                .limit(5)
+                .forEach(r -> System.out.printf("%s \t\t\t %d tries \t\t\t %d seconds\n",
+                        r.getName(),
+                        r.getTriesCount(),
+                        r.getTime() / 1000));
 
     }
 
