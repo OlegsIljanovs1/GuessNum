@@ -120,10 +120,7 @@ public class Main {
                     .comparingInt(GameResult::getTriesCount)
                     .thenComparing(GameResult::getTime))
                 .limit(5)
-                .forEach(r -> System.out.printf("%s \t\t\t %d tries \t\t\t %d seconds\n",
-                        r.getName(),
-                        r.getTriesCount(),
-                        r.getTime() / 1000));
+                .forEach(r -> System.out.format("%14s%10d%10d\n", r.getName(), r.getTriesCount(), r.getTime()));
 
     }
 
